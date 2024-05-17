@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Price Tracker",
+    "version": "1.0",
+    "description": "Tracks prices of products on e-commerce websites and notifies users of price drops.",
+    "permissions": [
+      "activeTab",
+      "background",
+      "storage",
+      "notifications",
+      "alarms"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon/16x16.png",
+        "48": "icon/48x48.png",
+        "128": "icon/128x128.png"
+      }
+    },
+    "icons": {
+      "16": "icon/16x16.png",
+      "48": "icon/48x48.png",
+      "128": "icon/128x128.png"
+    }
+  }
+  
