@@ -1,41 +1,49 @@
-document.getElementById('track').addEventListener('click', () => {
-    const url = document.getElementById('url').value;
-    const threshold = document.getElementById('threshold').value;
+function handleClick(e) {
+    var urlInput = document.getElementById('url');
+    var thresholdInput = document.getElementById('threshold')
+    if(urlInput && thresholdInput) {
+        var url = urlInput.value;
+        var threshold = thresholdInput.value;
+        console.log("input url", url);
+        console.log("input threshold", threshold);
+        if(!validatePrice(threshold)) {
+            window.alert("Please enter a valid price");
+            thresholdInput.value = "";
+            return;
+        }
+        if(!validateUrl(url)) {
+            window.alert("Please enter a valid url");
+            urlInput.value = "";
+            return;
+        }
+        
+        var trackedItems = document.getElementById('tracked-items');
+        var trackItem = document.createElement("li");
+        
+        trackItem.innerText = `Tracked Item: ${url} \nThreshold Price: ${threshold}`
 
-    if (!url || !threshold) {
-        document.getElementById('status').innerText = 'Please enter both URL and price threshold.';
-        document.getElementById('status').style.color = 'red';
-        return;
+        if(trackedItems) {
+            trackedItems.appendChild(trackItem)
+        }
     }
-
-    document.getElementById('status').innerText = 'Tracking price...';
-    document.getElementById('status').style.color = 'green';
-
-    // Save URL and threshold to storage
-    chrome.storage.sync.get({ trackedItems: [] }, (data) => {
-        const newItem = { url, threshold };
-        const updatedItems = [...data.trackedItems, newItem];
-        chrome.storage.sync.set({ trackedItems: updatedItems }, () => {
-            updateTrackedItemsList(updatedItems);
-            document.getElementById('status').innerText = 'Price tracking started.';
-        });
-    });
-
-    document.getElementById('url').value = '';
-    document.getElementById('threshold').value = '';
-});
-
-function updateTrackedItemsList(items) {
-    const list = document.getElementById('tracked-items');
-    list.innerHTML = '';
-    items.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.innerText = `${item.url} - Threshold: ${item.threshold}`;
-        list.appendChild(listItem);
-    });
 }
 
-// Load tracked items on popup open
-chrome.storage.sync.get({ trackedItems: [] }, (data) => {
-    updateTrackedItemsList(data.trackedItems);
-});
+function validatePrice(price) {
+    if(price < 0) {
+        return false;
+    }
+    else return true;
+}
+
+function validateUrl(string) {
+    let url;
+    
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;  
+    }
+  
+    return url.protocol === "http:" || url.protocol === "https:";
+  }
+document.getElementById('track').addEventListener('click', handleClick);
