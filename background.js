@@ -1,3 +1,4 @@
+import { getTrackedItems } from "./util";
 // const STORAGE_KEY = "user-preference-alarm-enabled";
 
 async function checkAlarmState() {
@@ -12,7 +13,7 @@ async function checkAlarmState() {
     //   }
     console.log("alarm state check")
     await chrome.alarms.create('demo-alarm', {
-        periodInMinutes: 10
+        periodInMinutes: 0.5
     })
 }
 
@@ -20,24 +21,8 @@ checkAlarmState();
 
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-    var urlInput = document.getElementById('url');
-    var thresholdInput = document.getElementById('threshold')
-    if (urlInput && thresholdInput) {
-        var url = urlInput.value;
-        var threshold = thresholdInput.value;
-        
-        console.log("input url", url);
-        console.log("input threshold", threshold);
-
-        var trackedItems = document.getElementById('tracked-items');
-        var trackItem = document.createElement("li");
-
-        trackItem.innerText = `Tracked Item: ${url} \nThreshold Price: ${threshold}`
-
-        if (trackedItems) {
-            trackedItems.appendChild(trackItem)
-        }
-    }
+    var trackedItems = getTrackedItems();
+    console.log("backgroundjs", trackedItems);
     console.log("alarm", alarm);
     chrome.notifications.create({
         type: 'basic',
