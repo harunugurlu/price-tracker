@@ -24,7 +24,7 @@ function handleTrackClick(e) {
 
         if (trackedItems) {
             trackedItems.appendChild(trackItem)
-            setTrackedItems(url,threshold);
+            setTrackedItems(url, threshold);
         }
     }
 }
@@ -33,6 +33,11 @@ function handleTrackCleanClick() {
     chrome.storage.local.clear(() => {
         console.log("the storage is cleared");
     });
+    var trackedItems = document.getElementById('tracked-items');
+
+    if (trackedItems) {
+        trackedItems.textContent = '';
+    }
 }
 
 
