@@ -34,7 +34,7 @@ export function validateUrl(string) {
 export function getTrackedItems() {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get("trackedItems").then(result => {
-            console.log("getTrackedItems result", result);
+            // console.log("getTrackedItems result", result);
             if (result.trackedItems) {
                 resolve(result.trackedItems);
             } else {

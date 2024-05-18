@@ -1,6 +1,6 @@
 import { validatePrice, validateUrl, setTrackedItems } from "./util.mjs";
 
-function handleClick(e) {
+function handleTrackClick(e) {
     var urlInput = document.getElementById('url');
     var thresholdInput = document.getElementById('threshold')
     if (urlInput && thresholdInput) {
@@ -29,5 +29,12 @@ function handleClick(e) {
     }
 }
 
+function handleTrackCleanClick() {
+    chrome.storage.local.clear(() => {
+        console.log("the storage is cleared");
+    });
+}
 
-document.getElementById('track').addEventListener('click', handleClick);
+
+document.getElementById('track').addEventListener('click', handleTrackClick);
+document.getElementById('clear-track').addEventListener('click', handleTrackCleanClick);

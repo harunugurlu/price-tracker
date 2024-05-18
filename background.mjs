@@ -29,7 +29,7 @@ async function handleAlarm(alarm) {
         console.log("error getting trackedItems", error);
     }
     console.log("backgroundjs", trackedItems);
-    console.log("alarm", alarm);
+    // console.log("alarm", alarm);
     chrome.notifications.create({
         type: 'basic',
         iconUrl: 'icon/128x128.png',
