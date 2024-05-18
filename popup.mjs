@@ -1,4 +1,4 @@
-import { validatePrice, validateUrl, setTrackedItems } from "./util";
+import { validatePrice, validateUrl, setTrackedItems } from "./util.mjs";
 
 function handleClick(e) {
     var urlInput = document.getElementById('url');

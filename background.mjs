@@ -1,4 +1,4 @@
-import { getTrackedItems } from "./util";
+import { getTrackedItems } from "./util.mjs";
 // const STORAGE_KEY = "user-preference-alarm-enabled";
 
 async function checkAlarmState() {
@@ -13,15 +13,21 @@ async function checkAlarmState() {
     //   }
     console.log("alarm state check")
     await chrome.alarms.create('demo-alarm', {
-        periodInMinutes: 0.5
+        periodInMinutes: 10
     })
 }
 
 checkAlarmState();
 
 
-chrome.alarms.onAlarm.addListener((alarm) => {
-    var trackedItems = getTrackedItems();
+
+async function handleAlarm(alarm) {
+    var trackedItems = [];
+    try {
+        trackedItems = await getTrackedItems();
+    } catch (error) {
+        console.log("error getting trackedItems", error);
+    }
     console.log("backgroundjs", trackedItems);
     console.log("alarm", alarm);
     chrome.notifications.create({
@@ -31,4 +37,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         message: 'The price is low',
         priority: 2
     });
-})
+}
+
+chrome.alarms.onAlarm.addListener(handleAlarm);

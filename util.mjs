@@ -32,10 +32,17 @@ export function validateUrl(string) {
 }
 
 export function getTrackedItems() {
-    chrome.storage.local.get("trackedItems").then(result => {
-        if(result.trackedItems) {
-            return result.trackedItems;
-        }
-        else return null;
-    })
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("trackedItems").then(result => {
+            console.log("getTrackedItems result", result);
+            if (result.trackedItems) {
+                resolve(result.trackedItems);
+            } else {
+                resolve([]);
+            }
+        }).catch(error => {
+            console.error("Error getting tracked items:", error);
+            reject(error);
+        });
+    });
 }
