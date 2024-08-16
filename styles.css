@@ -53,8 +53,19 @@ body {
 }
 
 .tracked-items-list li {
-    display: flex;
-    justify-content: space-between;
     padding: 8px;
     border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    position: relative;
+}
+
+.tracked-items-list .details {
+    display: none;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.tracked-items-list li.active .details {
+    display: block;
 }
